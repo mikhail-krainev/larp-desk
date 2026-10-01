@@ -10398,6 +10398,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@unocode/board@workspace:packages/board":
+  version: 0.0.0-use.local
+  resolution: "@unocode/board@workspace:packages/board"
+  dependencies:
+    "@testing-library/react": "npm:^16.0.0"
+    react: "npm:^19.2.1"
+    react-dom: "npm:^19.2.1"
+  peerDependencies:
+    react: ^19.2.1
+    react-dom: ^19.2.1
+  languageName: unknown
+  linkType: soft
+
 "@upsetjs/venn.js@npm:^2.0.0":
   version: 2.0.0
   resolution: "@upsetjs/venn.js@npm:2.0.0"

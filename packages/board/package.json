@@ -1,0 +1,27 @@
+{
+	"name": "@unocode/board",
+	"description": "UnoCode's whiteboard engine: document model, camera, tools and React renderer.",
+	"version": "0.0.0",
+	"private": true,
+	"license": "SEE LICENSE IN LICENSE.md",
+	"main": "./src/index.ts",
+	"types": "./src/index.ts",
+	"type": "module",
+	"scripts": {
+		"test-ci": "yarn run -T vitest run --passWithNoTests",
+		"test": "yarn run -T vitest --passWithNoTests",
+		"lint": "yarn run -T tsx ../../internal/scripts/lint.ts"
+	},
+	"peerDependencies": {
+		"react": "^19.2.1",
+		"react-dom": "^19.2.1"
+	},
+	"devDependencies": {
+		"@testing-library/react": "^16.0.0",
+		"react": "^19.2.1",
+		"react-dom": "^19.2.1"
+	},
+	"engines": {
+		"node": ">=22.12.0"
+	}
+}
