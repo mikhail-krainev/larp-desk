@@ -158,3 +158,7 @@ export {
 	TextTool,
 } from './tools/create'
 export { defaultTools } from './tools'
+export { Board, useEditorVersion } from './react/Board'
+export type { BoardProps } from './react/Board'
+export { BoardUI } from './react/BoardUI'
+export { FONT_FAMILY, measureTextCanvas } from './react/measure'

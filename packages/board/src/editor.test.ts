@@ -374,3 +374,26 @@ describe('camera', () => {
 		expect(board.getShapeAt({ x: 104, y: 50 })?.id).toBe(r.id)
 	})
 })
+
+describe('text editing', () => {
+	it('one editing session is one undo step', () => {
+		const s = board.add('sticky', { x: 0, y: 0 })
+		board.startEditing(s.id)
+		board.setText(s.id, 'h')
+		board.setText(s.id, 'he')
+		board.setText(s.id, 'hey')
+		board.stopEditing()
+		board.undo()
+		expect(board.shape(s.id)).toMatchObject({ text: '' })
+	})
+
+	it('an abandoned new text box leaves no history', () => {
+		const r = rect(0, 0)
+		board.setTool('text')
+		board.click(500, 500)
+		board.stopEditing()
+		expect(board.getShapes()).toHaveLength(1)
+		board.undo()
+		expect(board.getShape(r.id)).toBeUndefined()
+	})
+})

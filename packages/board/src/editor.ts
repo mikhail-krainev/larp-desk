@@ -711,17 +711,21 @@ export class Editor {
 	startEditing(id: ShapeId) {
 		const s = this.store.get(id)
 		if (!s || s.locked || !hasText(s)) return
+		this.stopEditing()
 		this.select([id])
+		// The whole editing session is one undo step, not one per keystroke.
+		this.history.beginGroup()
 		this.setState({ editingId: id })
 	}
 
-	/** Ends text editing. Text and sticky shapes left empty are removed. */
+	/** Ends text editing. Text shapes left empty are removed. */
 	stopEditing() {
 		const id = this._state.editingId
 		if (!id) return
 		this.setState({ editingId: null })
 		const s = this.store.get(id)
 		if (s?.type === 'text' && s.text.trim() === '') this.deleteShapes([id])
+		this.history.endGroup()
 	}
 
 	setText(id: ShapeId, text: string) {
@@ -741,6 +745,7 @@ export class Editor {
 	/** Replaces the whole board. Not undoable: loading a board starts a fresh history. */
 	loadDocument(doc: unknown) {
 		const migrated = migrateDocument(doc)
+		this.stopEditing()
 		this.history.ignore(() => {
 			this.store.transact(() => {
 				this.store.clear()
@@ -748,7 +753,7 @@ export class Editor {
 			}, 'remote')
 		})
 		this.history.clear()
-		this.setState({ selectedIds: [], editingId: null, hoveredId: null })
+		this.setState({ selectedIds: [], hoveredId: null })
 	}
 
 	/** Centre the camera on content after a load, keeping zoom at 1 when it fits. */

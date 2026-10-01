@@ -151,9 +151,12 @@ export class StickyTool extends Tool {
 			y: p.y - STICKY_SIZE / 2,
 			style: { ...style, color: style.color === 'ink' ? 'yellow' : style.color },
 		})
+		// Creation and the first edit share one undo step.
+		ed.history.beginGroup()
 		ed.createShapes([s])
 		ed.afterCreate([s.id])
 		ed.startEditing(s.id)
+		ed.history.endGroup()
 	}
 }
 
@@ -182,12 +185,16 @@ export class TextTool extends Tool {
 			fontSize,
 			style: ed.styleForNewShape(),
 		})
+		// Creation and the first edit share one undo step, so an abandoned empty text box
+		// leaves nothing in history.
+		ed.history.beginGroup()
 		ed.createShapes([s])
 		// Text tool always hands back to select: the next click should end editing, not
 		// start another text box.
 		ed.select([s.id])
 		ed.setTool('select')
 		ed.startEditing(s.id)
+		ed.history.endGroup()
 	}
 }
 
